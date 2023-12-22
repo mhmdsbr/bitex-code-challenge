@@ -1,0 +1,41 @@
+@import "variables";
+@import "helpers";
+@import "bootstrap";
+html,
+body {
+  padding: 0;
+  margin: 0;
+  line-height: 1.6;
+  font-size: 18px;
+}
+
+body {
+  height: 100%;
+  cursor: default;
+  font-family: $font-primary;
+  font-size: map-get($text-sizes, base);
+  color: map-get($exp-colors, 'white');
+  background-color: map-get($exp-colors, 'black-pearl');
+  line-height: var(--text-lineheight);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: #0070f3;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
