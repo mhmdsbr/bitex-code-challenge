@@ -3,6 +3,7 @@ import { Connect } from '@/components/Connect';
 import { Connected } from '@/components/Connected';
 import { Account } from '@/components/Account';
 import { WriteContract } from '@/components/WriteContract';
+import {SendTransaction} from "@/components/SendTransaction";
 
 export default function Page() {
     return (
@@ -21,8 +22,14 @@ export default function Page() {
                     </Col>
                 </Row>
                 <Row className="justify-content-center">
+
+                </Row>
+                <Row className="justify-content-center">
                     <Col>
                         <WriteContract />
+                    </Col>
+                    <Col>
+                        {/*<SendTransaction />*/}
                     </Col>
                 </Row>
             </Connected>

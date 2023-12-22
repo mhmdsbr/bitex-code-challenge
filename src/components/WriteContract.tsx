@@ -1,14 +1,13 @@
 'use client'
 
-import { BaseError } from 'viem'
-import { useContractWrite, useWaitForTransaction } from 'wagmi'
-
-import { wagmiContractConfig } from './contracts'
-import { stringify } from '@/utils/stringify'
-import React from "react";
+import { BaseError } from 'viem';
+import { useContractWrite, useWaitForTransaction } from 'wagmi';
+import { wagmiContractConfig } from './contracts';
+import { stringify } from '@/utils/stringify';
+import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
+import { SendTransaction } from './SendTransaction'; // Import the SendTransaction component
 import classes from "@/components/WriteContract.module.scss";
-
 
 export function WriteContract() {
     const [amountToMint, setAmountToMint] = React.useState("");
@@ -85,6 +84,8 @@ export function WriteContract() {
                     <div>
                         Transaction Receipt: <pre>{stringify(receipt, null, 2)}</pre>
                     </div>
+                    {/* Pass mintedAmount as prop to SendTransaction */}
+                    <SendTransaction mintedAmount={amountToMint} />
                 </>
             )}
             {isError && <Alert variant="danger">{(error as BaseError)?.shortMessage}</Alert>}

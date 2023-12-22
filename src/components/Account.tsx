@@ -3,6 +3,7 @@
 import { useAccount, useEnsName } from 'wagmi'
 import {Container, Row, Col} from 'react-bootstrap';
 import classes from "@/components/Account.module.scss";
+import {Balance} from "@/components/Balance";
 
 export function Account() {
   const { address } = useAccount()
@@ -26,6 +27,10 @@ export function Account() {
                       {ensName ?? address}
                       {ensName ? ` (${address})` : null}
                   </p>
+              </li>
+              <li>
+                  <h5>Balance: </h5>
+                  <Balance />
               </li>
           </ul>
         </Col>
