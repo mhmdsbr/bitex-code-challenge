@@ -20,7 +20,7 @@ export function Account() {
       </Row>
       <Row>
         <Col>
-          <ul className={`m-2 text-start d-block`}>
+          <ul className={`m-2 text-start d-flex gap-9 justify-content-start`}>
               <li>
                   <h5>Address: </h5>
                   <p>

@@ -13,27 +13,28 @@ export default function Page() {
                     <NavbarBrand className="text-light text-center" >Smart Contract ERC20 - Mint | Transaction</NavbarBrand>
                 </Container>
             </Navbar>
-
-            <Connect />
-            <Connected>
-                <Row className="justify-content-center">
-                    <Col>
-                        <Account />
-                    </Col>
-                </Row>
-                <Row className="justify-content-center">
-
-                </Row>
-                <Row className="justify-content-center">
-                    <Col>
-                        <WriteContract />
-                    </Col>
-                    <Col>
-                        {/*<SendTransaction />*/}
-                    </Col>
-                </Row>
-            </Connected>
-            <footer className={`border-top pt-4 text-white mb-6`}>
+            <Row>
+                <Col>
+                    <Connect />
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Connected>
+                        <Row className="justify-content-center">
+                            <Col>
+                                <Account />
+                            </Col>
+                        </Row>
+                        <Row className="justify-content-center">
+                            <Col>
+                                <WriteContract />
+                            </Col>
+                        </Row>
+                    </Connected>
+                </Col>
+            </Row>
+            <footer className="border-top pt-4 text-white mb-6">
                 <Container>
                     <Row>
                         <Col className="text-lg-start">

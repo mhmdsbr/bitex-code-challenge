@@ -1,10 +1,12 @@
-import React, {useState} from 'react';
-import {useContractWrite, useSendTransaction, useWaitForTransaction} from 'wagmi';
-import {wagmiContractConfig} from './contracts';
-import {stringify} from '@/utils/stringify';
+import React, { useState } from 'react';
+import { useContractWrite, useSendTransaction, useWaitForTransaction } from 'wagmi';
+import { wagmiContractConfig } from './contracts';
+import { stringify } from '@/utils/stringify';
+import { Form, Button, Alert } from 'react-bootstrap';
 
 export function SendTransaction({ mintedAmount }) {
     const [toAddress, setToAddress] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
     const { data, error, isLoading, isError, sendTransaction } = useSendTransaction();
     const { data: receipt, isLoading: isPending, isSuccess } = useWaitForTransaction({ hash: data?.hash });
     const { write: transferTokens } = useContractWrite({
@@ -12,14 +14,25 @@ export function SendTransaction({ mintedAmount }) {
         functionName: 'transfer',
     });
 
+    const isValidEthereumAddress = (address) => {
+        const regex = /^(0x)?[0-9a-fA-F]{40}$/;
+        return regex.test(address);
+    };
+
     const handleSendTokens = async () => {
         try {
             if (!toAddress) {
-                console.error('Recipient address is empty.');
+                setErrorMessage('Recipient address is required.');
                 return;
             }
 
-            // Call the transferTokens function with the recipient address and amount
+            if (!isValidEthereumAddress(toAddress)) {
+                setErrorMessage('Invalid Ethereum address.');
+                return;
+            }
+
+            setErrorMessage('');
+
             await transferTokens({
                 args: [toAddress, mintedAmount],
             });
@@ -29,45 +42,52 @@ export function SendTransaction({ mintedAmount }) {
     };
 
     const handleConfirm = async () => {
-        // Set the recipient address from the form
         const formData = new FormData(document.getElementById('sendTransactionForm'));
         const address = formData.get('address') as string;
 
-        // Ensure the address is not empty before setting toAddress state
-        if (address) {
+        if (address && isValidEthereumAddress(address)) {
             setToAddress(address);
         } else {
-            console.error('Recipient address is empty.');
+            setErrorMessage(address ? 'Invalid Ethereum address.' : 'Recipient address is required.');
+            return;
         }
 
-        // Call the handleSendTokens function
         await handleSendTokens();
     };
 
     return (
         <>
-            <form
+            <Form
                 id="sendTransactionForm"
                 onSubmit={(e) => {
                     e.preventDefault();
                 }}
             >
-                <input name="address" placeholder="Recipient address" />
-                <button type="submit" onClick={handleConfirm}>
+                <Form.Group controlId="formAddress">
+                    <Form.Label>Recipient address</Form.Label>
+                    <Form.Control
+                        type="text"
+                        placeholder="Enter recipient address"
+                        name="address"
+                        isInvalid={errorMessage !== ''}
+                    />
+                    <Form.Control.Feedback type="invalid">{errorMessage}</Form.Control.Feedback>
+                </Form.Group>
+                <Button variant="primary" type="submit" onClick={handleConfirm}>
                     Confirm
-                </button>
-            </form>
+                </Button>
+            </Form>
 
             {toAddress && (
                 <>
-                    <div>
+                    <Alert variant="secondary">
                         Sending {mintedAmount} tokens to {toAddress}...
-                    </div>
+                    </Alert>
                 </>
             )}
 
-            {isLoading && <div>Check wallet...</div>}
-            {isPending && <div>Transaction pending...</div>}
+            {isLoading && <Alert variant="secondary">Checking wallet...</Alert>}
+            {isPending && <Alert variant="secondary">Transaction pending...</Alert>}
             {isSuccess && (
                 <>
                     <div>Transaction Hash: {data?.hash}</div>
@@ -76,7 +96,7 @@ export function SendTransaction({ mintedAmount }) {
                     </div>
                 </>
             )}
-            {isError && <div>Error: {error?.message}</div>}
+            {isError && <Alert variant="danger">Error: {error?.message}</Alert>}
         </>
     );
 }
