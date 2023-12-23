@@ -29,17 +29,12 @@ export function SendTransaction({ mintedAmount }) {
         if (address && isValidEthereumAddress(address)) {
             try {
                 setErrorMessage('');
-                setToAddress(address); // Set the address first
+                setToAddress(address);
 
-                // Move the logic from handleSendTokens here
                 await sendTransaction({
                     to: address,
                     value: mintedAmount,
                 });
-
-                // After the transaction is sent, you might need to perform any additional tasks
-                // For example, you could wait for the transaction to be mined, update UI, etc.
-                // This might involve using useWaitForTransaction or similar functionality.
 
             } catch (error) {
                 console.error('Token transfer failed:', error);
@@ -60,18 +55,18 @@ export function SendTransaction({ mintedAmount }) {
         <Container>
             <Row>
                 <Col>
-                    <div className={`d-block p-4 pb-0`}>
-                        <h3 className="text-start">Send the minted token</h3>
+                    <div className="d-block pt-4 pb-0">
+                        <h3 className="text-lg-start text-center">Send the minted token</h3>
                     </div>
                     <Form
                         id="sendTransactionForm"
                         onSubmit={handleConfirm}
-                        className="p-4 pb-0 pt-0 d-flex flex-column gap-3"
+                        className="pb-0 pt-0 d-flex flex-column gap-3"
                     >
-                        <Form.Group className="text-start" controlId="formAddress">
+                        <Form.Group className="d-flex flex-column align-items-lg-start align-items-center" controlId="formAddress">
                             <Form.Label>Recipient address</Form.Label>
                             <Form.Control
-                                className="w-75"
+                                className="w-100"
                                 type="text"
                                 placeholder="Enter recipient address"
                                 name="address"
@@ -79,7 +74,7 @@ export function SendTransaction({ mintedAmount }) {
                             />
                             <Form.Control.Feedback type="invalid">{errorMessage}</Form.Control.Feedback>
                         </Form.Group>
-                        <Button className="w-25 mb-4" variant="primary" type="submit">
+                        <Button className="mb-4 w-50 m-lg-0 m-auto" variant="primary" type="submit">
                             Confirm
                         </Button>
                     </Form>
@@ -88,11 +83,11 @@ export function SendTransaction({ mintedAmount }) {
             <Row>
                 <Col>
                     {isSuccess && (
-                        <div className="d-flex p-4 pt-0 flex-column align-items-start">
-                            <Alert className="" variant="success">
+                        <div className="d-flex pt-0 flex-column align-items-start">
+                            <Alert className="ms-0 mt-3" variant="success">
                                 You have successfully sent {mintedAmount} tokens that you have recently minted.
                             </Alert>
-                            <Button className="mb-4 w-10" variant="primary" onClick={handleShowModal}>
+                            <Button className="m-lg-0 m-auto mb-4 w-10" variant="primary" onClick={handleShowModal}>
                                 View Details
                             </Button>
                         </div>
@@ -100,13 +95,13 @@ export function SendTransaction({ mintedAmount }) {
 
                     {toAddress && (
                         <>
-                            <Alert className="m-4" variant="secondary">
+                            <Alert className="text-break ms-0 mt-3" variant="secondary">
                                 Sending {mintedAmount} tokens to {toAddress}...
                             </Alert>
                         </>
                     )}
-                    {isLoading && <Alert className="m-4" variant="secondary">Checking wallet...</Alert>}
-                    {isPending && <Alert className="m-4" variant="secondary">Transaction pending...</Alert>}
+                    {isLoading && <Alert className="ms-0 mt-3" variant="secondary">Checking wallet...</Alert>}
+                    {isPending && <Alert className="ms-0 mt-3" variant="secondary">Transaction pending...</Alert>}
                     {isError && <Alert variant="danger">Error: {error?.message}</Alert>}
                 </Col>
                 <TransactionDetailsModal

@@ -3,7 +3,6 @@
 import { BaseError } from 'viem';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { Button, Row, Col, Alert, Container } from 'react-bootstrap';
-import classes from './Connect.module.scss';
 
 export function Connect() {
     const { connector, isConnected } = useAccount();
@@ -13,7 +12,7 @@ export function Connect() {
     const isMetaMaskInstalled = Boolean(window.ethereum);
 
     return (
-        <Container className={`${classes['connect-container']} mb-4`}>
+        <Container className="main-container mb-4">
             <Row className="justify-content-start">
                 <Col>
                     <div className="d-block p-4 border-bottom">
@@ -22,8 +21,8 @@ export function Connect() {
                             <li>Install the MetaMask Extension on Chrome.</li>
                             <li>Add your wallet to MetaMask.</li>
                             <li>Click on Connect to MetaMask Button.</li>
-                            <li>If you want to Mint, you can add the amount and click Mint.</li>
-                            <li>To send the minted token please add the recipient wallet address and click send.</li>
+                            <li>Add the amount you want to mint. Wait for it to be finished.</li>
+                            <li>After successful minting you can add the recipient wallet address to sent the minted token. </li>
                         </ul>
                     </div>
                 </Col>
@@ -40,9 +39,9 @@ export function Connect() {
             {isConnected && (
                 <Row className="justify-content-center">
                     <Col>
-                        <div className="d-flex justify-content-center m-6 w-100">
+                        <div className="d-flex justify-content-center gx-3 mt-3 w-100">
                             <Button
-                                className="w-50 p-3"
+                                className="w-75 p-3"
                                 variant="danger"
                                 onClick={() => disconnect()}
                             >
@@ -57,9 +56,9 @@ export function Connect() {
                     .filter((x) => x.ready && x.id !== connector?.id)
                     .map((x) => (
                         <Col key={x.id} xs={12} sm={6} md={4} lg={10} xl={12}>
-                            <div className="d-flex justify-content-center m-6 w-100">
+                            <div className="d-flex justify-content-center gx-3 mt-3 w-100">
                                 <Button
-                                    className="w-50 p-3"
+                                    className="w-75 p-3"
                                     variant="primary"
                                     onClick={() => connect({ connector: x })}
                                     disabled={isLoading && x.id === pendingConnector?.id}

@@ -2,7 +2,6 @@
 
 import { useAccount, useEnsName } from 'wagmi'
 import {Container, Row, Col} from 'react-bootstrap';
-import classes from "@/components/Account.module.scss";
 import {Balance} from "@/components/Balance";
 
 export function Account() {
@@ -10,7 +9,7 @@ export function Account() {
   const { data: ensName } = useEnsName({ address })
 
   return (
-    <Container className={ `${classes['account-container']} mb-4` }>
+    <Container className="main-container mb-4">
       <Row>
         <Col>
             <div className={`d-block p-4`}>
@@ -20,10 +19,10 @@ export function Account() {
       </Row>
       <Row>
         <Col>
-          <ul className={`m-2 text-start d-flex gap-9 justify-content-start`}>
+          <ul className={`text-start w-100 d-flex gap-4 justify-content-start flex-wrap`}>
               <li>
                   <h5>Address: </h5>
-                  <p>
+                  <p className="text-break">
                       {ensName ?? address}
                       {ensName ? ` (${address})` : null}
                   </p>

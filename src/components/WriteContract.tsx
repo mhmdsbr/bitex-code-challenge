@@ -3,12 +3,10 @@
 import { BaseError } from 'viem';
 import { useContractWrite, useWaitForTransaction } from 'wagmi';
 import { wagmiContractConfig } from './contracts';
-import { stringify } from '@/utils/stringify';
 import React from 'react';
 import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
-import { SendTransaction } from './SendTransaction'; // Import the SendTransaction component
-import TransactionDetailsModal from './TransactionDetailsModal'; // Import the new component
-import classes from "@/components/WriteContract.module.scss";
+import { SendTransaction } from './SendTransaction';
+import TransactionDetailsModal from './TransactionDetailsModal';
 
 export function WriteContract() {
     const [amountToMint, setAmountToMint] = React.useState("");
@@ -28,7 +26,6 @@ export function WriteContract() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Validate the input
         const amount = parseFloat(amountToMint);
         if (isNaN(amount) || amount <= 0) {
             setValidationError("Please enter a valid number greater than zero.");
@@ -55,35 +52,35 @@ export function WriteContract() {
     };
 
     return (
-        <Container className={`${classes['writeContract-container']} mb-9`}>
+        <Container className="mb-9 main-container">
             <Row>
-                <Col>
-                    <div className={`d-block p-4 pb-0`}>
-                        <h3 className="text-start">Mint Token</h3>
+                <Col className="mb-4" lg={6} xs={12} >
+                    <div className="d-block p-4 pb-0">
+                        <h3 className="text-lg-start text-center">Mint Token</h3>
                     </div>
                     <Form className="p-4 pb-0 pt-0 d-flex flex-column gap-3" onSubmit={handleSubmit}>
-                        <Form.Group className="d-flex flex-column align-items-start" controlId="amountToMint">
+                        <Form.Group className="d-flex flex-column align-items-lg-start align-items-center " controlId="amountToMint">
                             <Form.Label>Amount to Mint:</Form.Label>
                             <Form.Control
-                                className="w-50"
+                                className="w-100"
                                 type="number"
                                 placeholder="Enter amount"
                                 value={amountToMint}
                                 onChange={(e) => setAmountToMint(e.target.value)}
                             />
                         </Form.Group>
-                        <Button className="mb-4 w-25" variant="primary" disabled={isLoading} type="submit">
+                        <Button className="mb-4 w-50 m-lg-0 m-auto" variant="primary" disabled={isLoading} type="submit">
                             Mint Tokens
                         </Button>
                     </Form>
                     {isSuccess && (
                         <Row className="justify-content-start">
                             <Col>
-                                <div className="d-flex flex-column align-items-start">
-                                    <Alert className="ms-4" variant="success">
+                                <div className="d-flex flex-column align-items-lg-start align-items-center">
+                                    <Alert className="ms-lg-4 ms-0 mt-3" variant="success">
                                         You have successfully minted {amountToMint} token.
                                     </Alert>
-                                    <Button className="ms-4 mb-4 w-10" variant="primary" onClick={handleShowModal}>
+                                    <Button className="m-lg-0 ms-lg-4 m-auto mb-4 w-10" variant="primary" onClick={handleShowModal}>
                                         View Details
                                     </Button>
                                 </div>
@@ -98,13 +95,12 @@ export function WriteContract() {
                     )}
                     <Row>
                         <Col className="ms-4">
-                            {validationError && <Alert variant="danger">{validationError}</Alert>}
-                            {isLoading && <Alert variant="secondary">Checking the wallet...</Alert>}
-                            {isPending && <Alert variant="secondary">Transaction pending...</Alert>}
-                            {isError && <Alert variant="danger">{(error as BaseError)?.shortMessage}</Alert>}
+                            {validationError && <Alert className="ms-0 mt-3" variant="danger">{validationError}</Alert>}
+                            {isLoading && <Alert className="ms-0 mt-3" variant="secondary">Checking the wallet. Please wait...</Alert>}
+                            {isPending && <Alert className="ms-0 mt-3" variant="secondary">Transaction pending. Please wait...</Alert>}
+                            {isError && <Alert className="ms-0 mt-3" variant="danger">{(error as BaseError)?.shortMessage}</Alert>}
                         </Col>
                     </Row>
-
                 </Col>
                 <Col>
                     {isSuccess && (

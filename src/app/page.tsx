@@ -3,14 +3,13 @@ import { Connect } from '@/components/Connect';
 import { Connected } from '@/components/Connected';
 import { Account } from '@/components/Account';
 import { WriteContract } from '@/components/WriteContract';
-import {SendTransaction} from "@/components/SendTransaction";
 
 export default function Page() {
     return (
-        <Container className="text-center">
+        <Container>
             <Navbar expand="lg" className="">
                 <Container className="justify-content-center p-3">
-                    <NavbarBrand className="text-light text-center" >Smart Contract ERC20 - Mint | Transaction</NavbarBrand>
+                    <div className="text-light fs-3 text-center" >Smart Contract ERC20 - Mint | Transfer</div>
                 </Container>
             </Navbar>
             <Row>

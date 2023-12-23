@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/global.scss';
 
 export const metadata = {
-  title: 'React Form - ERC20 - Mint | Transaction',
+  title: 'React Form - ERC20 - Mint | Transfer',
 }
 
 export default function RootLayout({
