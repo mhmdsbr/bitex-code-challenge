@@ -26,7 +26,14 @@ export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
     const handleConfirm = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const formData = new FormData(document.getElementById('sendTransactionForm'));
+        const formElement = document.getElementById('sendTransactionForm') as HTMLFormElement | null;
+
+        if (!formElement) {
+            console.error("Form element not found");
+            return;
+        }
+
+        const formData = new FormData(formElement);
         const address = formData.get('address') as string;
 
         if (address && isValidEthereumAddress(address)) {
@@ -38,7 +45,6 @@ export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
                     to: address,
                     value: mintedAmount,
                 });
-
             } catch (error) {
                 console.error('Token transfer failed:', error);
             }
@@ -46,6 +52,7 @@ export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
             setErrorMessage(address ? 'Invalid Ethereum address.' : 'Recipient address is required.');
         }
     };
+
 
     const handleShowModal = () => {
         setShowModal(true);
