@@ -2,14 +2,28 @@
 
 import { BaseError } from 'viem';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
+import detectEthereumProvider from '@metamask/detect-provider';
+import {useEffect, useState} from "react";
 import { Button, Row, Col, Alert, Container } from 'react-bootstrap';
 
 export function Connect() {
     const { connector, isConnected } = useAccount();
     const { connect, connectors, error, isLoading, pendingConnector } = useConnect();
     const { disconnect } = useDisconnect();
+    const [isMetaMaskInstalled, setIsMetaMaskInstalled] = useState(false);
 
-    const isMetaMaskInstalled = Boolean(window.ethereum);
+    useEffect(() => {
+        const  walletProvider = async () => {
+            try {
+                const  provider = await detectEthereumProvider();
+                setIsMetaMaskInstalled(Boolean(provider));
+            } catch (error) {
+                console.error("MetaMask is not installed ", error);
+            }
+        };
+        walletProvider();
+    }, [])
+
 
     return (
         <Container className="main-container mb-4">
