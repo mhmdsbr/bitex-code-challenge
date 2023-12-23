@@ -96,6 +96,15 @@ export function WriteContract() {
                             />
                         </Row>
                     )}
+                    <Row>
+                        <Col className="ms-4">
+                            {validationError && <Alert variant="danger">{validationError}</Alert>}
+                            {isLoading && <Alert variant="secondary">Checking the wallet...</Alert>}
+                            {isPending && <Alert variant="secondary">Transaction pending...</Alert>}
+                            {isError && <Alert variant="danger">{(error as BaseError)?.shortMessage}</Alert>}
+                        </Col>
+                    </Row>
+
                 </Col>
                 <Col>
                     {isSuccess && (
@@ -105,11 +114,6 @@ export function WriteContract() {
                     )}
                 </Col>
             </Row>
-
-            {validationError && <Alert variant="danger">{validationError}</Alert>}
-            {isLoading && <Alert variant="secondary">Checking the wallet...</Alert>}
-            {isPending && <Alert variant="secondary">Transaction pending...</Alert>}
-            {isError && <Alert variant="danger">{(error as BaseError)?.shortMessage}</Alert>}
         </Container>
     );
 }
