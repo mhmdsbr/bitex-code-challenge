@@ -1,16 +1,21 @@
-"use client"
-
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { stringify } from '@/utils/stringify';
 
-const TransactionDetailsModal = ({ show, handleClose, hash, receipt }) => {
+interface TransactionDetailsModalProps {
+    show: any;
+    handleClose: any;
+    hash: any;
+    receipt: any;
+}
+
+const TransactionDetailsModal: React.FC<TransactionDetailsModalProps> = ({ show, handleClose, hash, receipt }) => {
     return (
         <Modal className={`ps-0 bg-secondary modal-xl bg-opacity-75`} show={show} onHide={handleClose}>
             <Modal.Header className="bg-dark">
                 <Modal.Title>Transaction Details</Modal.Title>
             </Modal.Header>
-                <Modal.Body className="bg-dark">
+            <Modal.Body className="bg-dark">
                 <p className="text-break">
                     <span className="fw-bold">Transaction Hash: </span>
                     <br/>
