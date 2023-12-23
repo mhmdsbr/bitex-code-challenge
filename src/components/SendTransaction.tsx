@@ -3,7 +3,10 @@ import { useSendTransaction, useWaitForTransaction } from 'wagmi';
 import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import TransactionDetailsModal from "@/components/TransactionDetailsModal";
 
-export function SendTransaction({ mintedAmount }) {
+interface SendTransactionProps {
+    mintedAmount?: number;
+}
+export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
     const [toAddress, setToAddress] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const { data, error, isLoading, isError, sendTransaction } = useSendTransaction();
