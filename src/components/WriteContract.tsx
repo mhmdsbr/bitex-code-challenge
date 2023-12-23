@@ -23,7 +23,7 @@ export function WriteContract() {
         isSuccess,
     } = useWaitForTransaction({ hash: data?.hash });
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         const amount = parseFloat(amountToMint);
