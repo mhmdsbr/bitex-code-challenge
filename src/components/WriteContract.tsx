@@ -105,7 +105,7 @@ export function WriteContract() {
                 <Col>
                     {isSuccess && (
                         <>
-                            <SendTransaction mintedAmount={amountToMint} />
+                            <SendTransaction mintedAmount={parseFloat(amountToMint)} />
                         </>
                     )}
                 </Col>
