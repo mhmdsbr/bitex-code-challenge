@@ -13,7 +13,7 @@ export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
     const { data: receipt, isLoading: isPending, isSuccess } = useWaitForTransaction({ hash: data?.hash });
     const [showModal, setShowModal] = React.useState(false);
 
-    const isValidEthereumAddress = (address) => {
+    const isValidEthereumAddress = (address: string) => {
         const regex = /^(0x)?[0-9a-fA-F]{40}$/;
         return regex.test(address);
     };
