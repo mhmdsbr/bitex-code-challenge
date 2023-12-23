@@ -23,7 +23,7 @@ export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
         }
     }, [isSuccess]);
 
-    const handleConfirm = async (e) => {
+    const handleConfirm = async (e: React.FormEvent) => {
         e.preventDefault();
 
         const formData = new FormData(document.getElementById('sendTransactionForm'));
