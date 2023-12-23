@@ -43,7 +43,7 @@ export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
 
                 await sendTransaction({
                     to: address,
-                    value: mintedAmount,
+                    value: BigInt(mintedAmount),
                 });
             } catch (error) {
                 console.error('Token transfer failed:', error);
