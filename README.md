@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js+Wagmi ERC20 Token Minting and Transfering App
+
+## Overview
+
+This is a simple Next.js application using the Wagmi library to interact with an ERC20 smart contract on the Ethereum network. The app allows users to mint new tokens and send them to another wallet address.
+
+## Prerequisites
+
+Before running the app, make sure you have the following:
+
+1. **Node.js:** Install Node.js from [nodejs.org](https://nodejs.org/).
+
+2. **Metamask Wallet:**
+    - Install the Metamask browser extension from [metamask.io](https://metamask.io/).
+    - Create an account or import an existing one.
+    - Connect Metamask to the Goerli test network.
 
 ## Getting Started
 
-First, run the development server:
+1. **Install Dependencies:**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+   ```bash
+   npm install
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Run Development Environment:**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   ```bash
+   npm run dev
+The app will be accessible at http://localhost:3000.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+3. **Connect Metamask:**
+    - Open the app in your browser.
+    - Click the "Connect" button to connect your Metamask wallet.
+    - Make sure you are connecting to GOERLI network (If you don't the application only connect to wallet and there will be no functioning)
+4. **Mint Tokens:**
+    - After connecting, enter the amount of tokens you want to mint in the input field.
+    - Click the "Mint" button.
+    - Confirm the transaction in Metamask.
+5. **Send Tokens:**
+   - Once the minting is successful, a new input field will appear.
+   - Enter the wallet address where you want to send the minted tokens.
+   - Click the "Send Tokens" button.
+   - Confirm the transaction in Metamask.
+## Additional Information 
+   1. If you are using your own smart contract, provide the address in the application code.
+   2. Ensure the contract is deployed on the Goerli test network. (If you don't, the application only connect to wallet and there will be no functioning)
+   3. You can customize the application behavior by setting environment variables in a .env file.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
