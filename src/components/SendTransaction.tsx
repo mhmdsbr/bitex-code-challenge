@@ -7,9 +7,7 @@ import {wagmiContractConfig} from "@/components/contracts";
 interface SendTransactionProps {
     mintedAmount?: number | undefined;
 }
-interface EthereumAddress {
-    address: any;
-}
+
 export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
     const [toAddress, setToAddress] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -20,11 +18,6 @@ export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
     });
     const { data: receipt, isLoading: isPending, isSuccess } = useWaitForTransaction({ hash: data?.hash });
     const [showModal, setShowModal] = React.useState(false);
-
-    const isValidEthereumAddress = ({ address }: EthereumAddress) => {
-        const regex = /^(0x)[0-9A-Fa-f]{40}$/;
-        return regex.test(address);
-    };
 
     useEffect(() => {
         if (isSuccess) {
@@ -43,11 +36,18 @@ export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
         }
 
         const formData = new FormData(formElement);
-        const address = formData.get('address');
+        let address = formData.get('address');
+        if (typeof address === 'string' && address.length >= 2) {
+            if (address.startsWith('0x')) {
+                address = address.substring(2);
+            }
 
-        const isValidEthereumAddress = (address: string | null) => {
-            const regex = /^(0x)[0-9A-Fa-f]{40}$/;
-            return regex.test(address || '');
+            console.log(address);
+        }
+
+        const isValidEthereumAddress = (address: any) => {
+            const regex = /[0-9A-Fa-f]{40}$/;
+            return regex.test(address);
         };
 
         if (address && isValidEthereumAddress(address as string)) {
@@ -56,8 +56,9 @@ export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
                 setToAddress(address as string);
 
                 await write({
-                    args: [address as string, BigInt(mintedAmount)],
+                    args: [`0x${address}`, mintedAmount],
                 });
+
             } catch (error) {
                 console.error('Token transfer failed:', error);
             }
