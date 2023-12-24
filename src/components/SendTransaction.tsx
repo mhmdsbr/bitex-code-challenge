@@ -8,7 +8,7 @@ interface SendTransactionProps {
     mintedAmount?: number | undefined;
 }
 interface EthereumAddress {
-    address: string;
+    address: any;
 }
 export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
     const [toAddress, setToAddress] = useState('');
@@ -45,13 +45,13 @@ export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
         const formData = new FormData(formElement);
         const address = formData.get('address') as string;
 
-        if (address && isValidEthereumAddress({ address: address })) {
+        if (address && isValidEthereumAddress({address : address})) {
             try {
                 setErrorMessage('');
                 setToAddress(address);
 
                 await write({
-                    args: [address, BigInt(mintedAmount)],
+                    args: address.startsWith("0x") ? [address, BigInt(mintedAmount)] : [`0x${address}`, BigInt(mintedAmount)],
                 });
 
             } catch (error) {
