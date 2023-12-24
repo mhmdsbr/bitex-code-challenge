@@ -19,7 +19,7 @@ export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
     const [showModal, setShowModal] = React.useState(false);
 
     const isValidEthereumAddress = (address: string): boolean => {
-        const regex = /[0-9a-fA-F]{40}$/;
+        const regex = /^(0x)?[0-9A-Fa-f]{40}$/;
         return regex.test(address);
     };
 
@@ -48,7 +48,7 @@ export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
                 setToAddress(address);
 
                 await write({
-                    args: [`0x${address}`, BigInt(mintedAmount)],
+                    args: [address, BigInt(mintedAmount)],
                 });
 
             } catch (error) {
