@@ -7,6 +7,9 @@ import {wagmiContractConfig} from "@/components/contracts";
 interface SendTransactionProps {
     mintedAmount?: number | undefined;
 }
+interface EthereumAddress {
+    address: string;
+}
 export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
     const [toAddress, setToAddress] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -18,8 +21,8 @@ export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
     const { data: receipt, isLoading: isPending, isSuccess } = useWaitForTransaction({ hash: data?.hash });
     const [showModal, setShowModal] = React.useState(false);
 
-    const isValidEthereumAddress = (address: string): boolean => {
-        const regex = /^(0x)?[0-9A-Fa-f]{40}$/;
+    const isValidEthereumAddress = ({ address }: EthereumAddress) => {
+        const regex = /^(0x)[0-9A-Fa-f]{40}$/;
         return regex.test(address);
     };
 
