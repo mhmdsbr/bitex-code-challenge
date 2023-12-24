@@ -18,9 +18,9 @@ export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
     const { data: receipt, isLoading: isPending, isSuccess } = useWaitForTransaction({ hash: data?.hash });
     const [showModal, setShowModal] = React.useState(false);
 
-    const isValidEthereumAddress = (address: any): boolean => {
+    const isValidEthereumAddress = (address: string): boolean => {
         const regex = /[0-9a-fA-F]{40}$/;
-        return regex.test(`0x${address}`);
+        return regex.test(`address`);
     };
 
     useEffect(() => {
