@@ -45,13 +45,13 @@ export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
         const formData = new FormData(formElement);
         const address = formData.get('address') as string;
 
-        if (address && isValidEthereumAddress(address)) {
+        if (address && isValidEthereumAddress({ address: `0x${address}` })) {
             try {
                 setErrorMessage('');
                 setToAddress(address);
 
                 await write({
-                    args: [address, BigInt(mintedAmount)],
+                    args: [`0x${address}`, BigInt(mintedAmount)],
                 });
 
             } catch (error) {
