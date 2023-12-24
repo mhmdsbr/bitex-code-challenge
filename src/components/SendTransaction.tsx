@@ -45,15 +45,19 @@ export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
         const formData = new FormData(formElement);
         const address = formData.get('address');
 
-        if (address && isValidEthereumAddress({address : address})) {
+        const isValidEthereumAddress = (address: string | null) => {
+            const regex = /^(0x)[0-9A-Fa-f]{40}$/;
+            return regex.test(address || '');
+        };
+
+        if (address && isValidEthereumAddress(address as string)) {
             try {
                 setErrorMessage('');
-                setToAddress(address);
+                setToAddress(address as string);
 
                 await write({
-                    args: [address, BigInt(mintedAmount)],
+                    args: [address as string, BigInt(mintedAmount)],
                 });
-
             } catch (error) {
                 console.error('Token transfer failed:', error);
             }
@@ -61,7 +65,6 @@ export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
             setErrorMessage(address ? 'Invalid Ethereum address.' : 'Recipient address is required.');
         }
     };
-
 
     const handleShowModal = () => {
         setShowModal(true);
