@@ -1,4 +1,12 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const dotenv = require("dotenv");
+dotenv.config();
 
-module.exports = nextConfig
+const nextConfig = {};
+
+module.exports = {
+    env: {
+        ALCHEMY_API_KEY: process.env.ALCHEMY_API_KEY,
+    },
+    ...nextConfig,
+};

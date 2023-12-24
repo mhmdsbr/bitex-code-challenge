@@ -1,4 +1,4 @@
-import {Container, Row, Col, Navbar, NavbarBrand} from 'react-bootstrap';
+import {Container, Row, Col, Navbar} from 'react-bootstrap';
 import { Connect } from '@/components/Connect';
 import { Connected } from '@/components/Connected';
 import { Account } from '@/components/Account';
