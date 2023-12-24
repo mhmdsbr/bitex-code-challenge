@@ -51,7 +51,7 @@ export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
                 setToAddress(address);
 
                 await write({
-                    args: [`0x${address}`, BigInt(mintedAmount)],
+                    args: [address, BigInt(mintedAmount)],
                 });
 
             } catch (error) {
