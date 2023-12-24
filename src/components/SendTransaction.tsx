@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { useSendTransaction, useWaitForTransaction } from 'wagmi';
+import { useContractWrite, useSendTransaction, useWaitForTransaction } from 'wagmi';
 import { Container, Row, Col, Form, Button, Alert } from 'react-bootstrap';
 import TransactionDetailsModal from "@/components/TransactionDetailsModal";
+import {wagmiContractConfig} from "@/components/contracts";
 
 interface SendTransactionProps {
-    mintedAmount?: number;
+    mintedAmount?: number | undefined;
 }
 export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
     const [toAddress, setToAddress] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
-    const { data, error, isLoading, isError, sendTransaction } = useSendTransaction();
+    // const { data, error, isLoading, isError, sendTransaction } = useSendTransaction();
+    const { write, data, error, isLoading, isError } = useContractWrite({
+        ...wagmiContractConfig,
+        functionName: 'transfer',
+    });
     const { data: receipt, isLoading: isPending, isSuccess } = useWaitForTransaction({ hash: data?.hash });
     const [showModal, setShowModal] = React.useState(false);
 
@@ -41,10 +46,11 @@ export function SendTransaction({ mintedAmount = 0 } : SendTransactionProps) {
                 setErrorMessage('');
                 setToAddress(address);
 
-                await sendTransaction({
-                    to: address,
-                    value: BigInt(mintedAmount),
+                await write({
+                    functionName: 'transfer',
+                    args: [address, mintedAmount],
                 });
+
             } catch (error) {
                 console.error('Token transfer failed:', error);
             }
